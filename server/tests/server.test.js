@@ -74,3 +74,16 @@ describe('GET /todos', () =>{
             .end(done)
     })
 });
+
+// describe('GET /todos/:id', () => {
+//     it('should get todo by id', (done) => {
+//         request(app)
+//             .get('/todos/5b190b159f09c1116c888ad7')
+//             .expect(200)
+//             .expect((res) => {
+//                 console.log(res.body);
+//                 expect(res.body.todo).toBe(true);
+//             })
+//             .end(done)
+//     });
+// });
