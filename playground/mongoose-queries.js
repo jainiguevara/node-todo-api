@@ -4,7 +4,7 @@ const { ObjectID } = require('mongodb');
 const { Todo } = require('./../server/models/todo');
 const { User } = require('./../server/models/user')
 
-const id = '5b190114f005602495729aeb';
+const id = '5b274495819c8aa991dd5741';
 
 if (!ObjectID.isValid(id)) {
     console.log('Id not valid');
@@ -14,9 +14,10 @@ if (!ObjectID.isValid(id)) {
             return console.log('user not found');
         }
 
-        console.log('User found:', user);
+        console.log('User found:', JSON.stringify(user, undefined, 2));
     }), (error) => console.log(error);
 }
+
 
 // Todo.find({
 //     _id: id
