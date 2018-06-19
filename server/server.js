@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 
-// const { mongoose } = require('./db/mongoose');
+const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
 
@@ -25,6 +25,19 @@ app.post('/todos', (req, res) => {
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
         res.send({todos});
+    }), (error) => {
+        res.status(400).send(error);
+    };
+    //res.send({todos: 'todos'});
+});
+
+app.get('/', (req, res) => {
+    res.send({application: 'Todo App'});
+});
+
+app.get('/users', (req, res) => {
+    User.find().then((users) => {
+        res.send({users});
     }), (error) => {
         res.status(400).send(error);
     };
