@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 
+const secret = 'las-pinas-#th3c00k`sS3#r%-tondo-manila';
+
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -42,10 +44,26 @@ UserSchema.methods.generateAuthToken = function () {
     const user = this;
     const access = 'auth';
     const token = jwt.sign({ _id : user._id.toHexString(), access }, 
-        'las-pinas-#th3c00k`sS3#r%-tondo-manila').toString();
+        secret).toString();
     user.tokens = user.tokens.concat([{access, token}]);
     return user.save().then(() => {
         return token;
+    });
+};
+
+UserSchema.statics.findByToken = function (token) {
+    const User = this;
+    var decoded;
+    
+    try {
+        decoded = jwt.verify(token, secret);    
+    } catch (error) {
+        return Promise.reject();
+    }
+    return User.findOne({
+        '_id': decoded._id,
+        'tokens.token': token,
+        'tokens.access': 'auth'
     });
 };
 
